@@ -1,6 +1,8 @@
 {
   "name": "fe",
   "version": "0.1.0",
+  "description": "A clone of Growth Suplementos.",
+  "author": "Enrico B. Palma & Eduardo Radespiel",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.4",
