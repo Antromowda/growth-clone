@@ -11,6 +11,7 @@ services:
     command: bash -c "yarn && yarn prisma:run && yarn dev"
     environment:
       DATABASE_URL: postgresql://postgres:localdev123@db:5432/growth_suplementos?schema=growth
+      EXPRESS_PORT: 3333
     volumes:
      - ./api:/home/node/app
     ports:
