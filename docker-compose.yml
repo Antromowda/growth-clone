@@ -1,0 +1,57 @@
+version: '3.1'
+
+volumes:
+  db-data:
+
+services:
+
+  api:
+    image: node:lts
+    working_dir: /home/node/app
+    command: bash -c "yarn && yarn prisma:run && yarn dev"
+    environment:
+      DATABASE_URL: postgresql://postgres:localdev123@db:5432/growth_suplementos?schema=growth
+    volumes:
+     - ./api:/home/node/app
+    ports:
+      - 3333:3333
+    depends_on:
+      - db
+  
+  fe:
+    image: node:lts
+    working_dir: /home/node/app
+    command: bash -c "yarn && yarn start"
+    volumes:
+     - ./fe:/home/node/app
+    ports:
+      - 3000:3000
+    depends_on:
+      - api
+
+  db:
+    image: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: localdev123
+      POSTGRES_DB: growth_suplementos
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+
+  adminer:
+    image: michalhosna/adminer
+    ports:
+      - 8080:8080
+    environment:
+      ADMINER_DB: growth_suplementos
+      ADMINER_DRIVER: pgsql
+      ADMINER_SERVER: db
+      ADMINER_USERNAME: postgres
+      ADMINER_PASSWORD: localdev123
+      ADMINER_AUTOLOGIN: 1
+      ADMINER_NAME: local
+    depends_on:
+      - db
+
