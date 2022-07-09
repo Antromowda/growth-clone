@@ -8,21 +8,33 @@ datasource db {
 }
 
 model User {
-  id    String @id @default(uuid())
-  name  String
-  email String
-  cpf   String
+  id        String   @id @default(uuid())
+  name      String
+  email     String   @unique
+  cpf       String   @unique
+  role      Role     @default(USER)
+  gPoints   GPoint   @relation(fields: [gPointsId], references: [id])
+  gPointsId String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
 
-  @@map("users")
+enum Role {
+  USER
+  ADMIN
 }
 
 model Product {
-  id                String @id @default(uuid())
-  name              String
-  short_description String
-  description       String
-  reference         Int
-  price             Int
+  id               String @id @default(uuid())
+  name             String
+  shortDescription String
+  description      String
+  referenceNumber  Int
+  price            Int
+}
 
-  @@map("products")
+model GPoint {
+  id          String @id @default(uuid())
+  value       Int
+  userGPoints User?
 }
