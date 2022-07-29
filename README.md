@@ -5,7 +5,7 @@
 
 You must have docker-compose installed to run the project.
 
-**Run docker-compose in your terminal to start all the container:**
+**Run docker-compose in your terminal to start all the containers:**
 ```bash
 docker-compose up
 ```
